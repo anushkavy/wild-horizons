@@ -1,23 +1,14 @@
 import http from "node:http";
 // import { createServer } from "node:http";
+import { getDataFromDB } from "./database/db.js";
 
 const PORT = 8000;
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   console.log(req.url);
-
+  const destinationsData = await getDataFromDB();
   if (req.url === "/api" && req.method === "GET") {
-    res.write("this is write 1\n");
-    res.write(
-      "You still need to use res.end with write as well to end a request. just res.end() is fine\n"
-    );
-    res.end(
-      "Hi, this is end. End sends data over http and then ends the response.",
-      "utf-8",
-      () => {
-        console.log("Response sent");
-      }
-    );
+    res.end(JSON.stringify(destinationsData));
   }
 });
 
