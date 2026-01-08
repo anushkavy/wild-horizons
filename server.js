@@ -8,6 +8,8 @@ const server = http.createServer(async (req, res) => {
   console.log(req.url);
   const destinationsData = await getDataFromDB();
   if (req.url === "/api" && req.method === "GET") {
+    res.setHeader("Content-Type", "application/json");
+    res.statusCode = 200;
     res.end(JSON.stringify(destinationsData));
   }
 });
