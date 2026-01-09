@@ -11,6 +11,17 @@ const server = http.createServer(async (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.statusCode = 200;
     res.end(JSON.stringify(destinationsData));
+  } else if (req.url.startsWith("/api/continent") && req.method === "GET") {
+    const continent = req.url.split("/")[3];
+    console.log(continent);
+    res.setHeader("Content-Type", "application/json");
+    res.statusCode = 200;
+    const filteredData = destinationsData.filter(
+      (destination) =>
+        destination.continent.toLocaleLowerCase() ===
+        continent.toLocaleLowerCase()
+    );
+    res.end(JSON.stringify(filteredData));
   } else {
     res.setHeader("Content-Type", "application/json");
     res.statusCode = 404;
